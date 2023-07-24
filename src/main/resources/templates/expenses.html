@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Expenses Manager</title>
+    <link rel="stylesheet" href="/static/css/styles.css"> <!-- Ruta al archivo CSS -->
+
+</head>
+<body>
+<h1>Lista de Gastos</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Descripción</th>
+        <th>Monto</th>
+        <th>Fecha</th>
+        <th>Categoría</th>
+        <th>Acción</th>
+    </tr>
+    <tr th:each="expense : ${expenses}">
+        <td th:text="${expense.id}"></td>
+        <td th:text="${expense.description}"></td>
+        <td th:text="${expense.amount}"></td>
+        <td th:text="${expense.date}"></td>
+        <td th:text="${expense.category}"></td>
+        <td>
+            <form th:action="@{/deleteExpense}" method="post">
+                <input type="hidden" name="id" th:value="${expense.id}" />
+                <button type="submit">Eliminar</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+
+<br>
+
+<h2>Agregar Nuevo Gasto</h2>
+<form th:action="@{/addExpense}" method="post">
+    <label for="description">Descripción:</label>
+    <input type="text" id="description" name="description" required>
+    <br>
+    <label for="amount">Cantidad:</label>
+    <input type="number" id="amount" name="amount" required>
+    <br>
+    <label for="date">Fecha:</label>
+    <input type="date" id="date" name="date" required>
+    <br>
+    <label for="category">Categoría:</label>
+    <input type="text" id="category" name="category" required>
+    <br>
+    <input type="submit" value="Guardar">
+</form>
+
+<h2>Total de Gastos: <span th:text="${totalExpenses}"></span></h2>
+</body>
+</html>
